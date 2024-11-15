@@ -42,6 +42,23 @@ app.post("/signup", async (req, res) =>{
 });
 
 
+app.post("/login", async (req, res) => {
+    try {
+        const check = await User.findOne({email: req.body.email});
+        if(!check) {
+            res.send("Email not found");
+        }else {
+            const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+            if(isPasswordMatch) {
+            res.send("Login successful")
+            }else {
+            res.send("Wrong password")
+            }
+        }  
+    }catch {
+        res.send("Wrong Details")
+    }
+});
 
 
 
