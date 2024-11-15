@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const port = 4000;
-const authRoutes = ('./routes/auth');
+const User = require('./models/User');
+
 
 
 mongoose.connect(process.env.MONGO_URI);
@@ -13,8 +14,23 @@ db.once('open', () => console.log('Connected to Database'));
 
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-app.use("/api/auth", authRoutes)
+app.get("/", (req, res)=> {
+    res.send("hello")
+})
+
+app.post("/signup", async (req, res) =>{
+    const data = {
+        email: req.body.email,
+        password: req.body.password
+    }
+
+    const userdata = await User.insertMany(data);
+    console.log(userdata);
+})
+
+
 
 
 
