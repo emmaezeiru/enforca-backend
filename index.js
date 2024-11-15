@@ -1,6 +1,7 @@
 require ('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const app = express();
 const port = 4000;
 const User = require('./models/User');
@@ -26,9 +27,21 @@ app.post("/signup", async (req, res) =>{
         password: req.body.password
     }
 
-    const userdata = await User.insertMany(data);
-    console.log(userdata);
-})
+    const existingUser = await User.findOne({email: data.email})
+
+    if (existingUser) {
+        res.send("Email already exists. please choose another email.")
+    }else {
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        data.password = hashedPassword;
+
+        const userdata = await User.insertMany(data);
+        console.log(userdata);
+    }
+});
+
+
 
 
 
