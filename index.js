@@ -38,6 +38,7 @@ app.post("/signup", async (req, res) =>{
 
         const userdata = await User.insertMany(data);
         console.log(userdata);
+        res.send("account created")
     }
 });
 
