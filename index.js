@@ -12,7 +12,6 @@ db.once('open', () => console.log('Connected to Database'));
 
 
 
-
 app.get("/", (req, res)=> {
     res.send("server is running ")
 })
