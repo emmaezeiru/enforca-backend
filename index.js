@@ -17,9 +17,10 @@ db.once('open', () => console.log('Connected to Database'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/", (req, res)=> {
-    res.send("hello")
-})
+//testing route
+//app.get("/", (req, res)=> {
+//    res.send("hello")
+//})
 
 app.post("/signup", async (req, res) =>{
     const data = {
